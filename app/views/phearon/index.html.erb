@@ -1,0 +1,17 @@
+<h1><%= @characters%></h1>
+
+
+<% @characters.each do | character |%>
+    <%= character.name %>
+<% end %>
+
+<% form_tag do |f|%>
+    <%= f.select %>
+<% end %>
+
+<p> This page serves as a calculator for homebrew/complex stats</p>
+
+<div data-controller="gear"> Gear calculator</div>
+
+
+<h2> Assassins Rosters </h2>
