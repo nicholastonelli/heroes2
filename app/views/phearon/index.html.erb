@@ -1,6 +1,17 @@
-<h1>Phearon</h1>
-<p>This page serves as a calculator for homebrew/complex stats</p>
+<h1><%= @characters%></h1>
 
-<h2>Gear calculator</h2>
 
-<h2>Assassins Roster</h2>
+<% @characters.each do | character |%>
+    <%= character.name %>
+<% end %>
+
+<% form_tag do |f|%>
+    <%= f.select %>
+<% end %>
+
+<p> This page serves as a calculator for homebrew/complex stats</p>
+
+<div data-controller="gear"> Gear calculator</div>
+
+
+<h2> Assassins Rosters </h2>
