@@ -1,17 +1,53 @@
-<h1><%= @characters%></h1>
+
 
 
 <% @characters.each do | character |%>
-    <%= character.name %>
+    <% character.name %>
 <% end %>
 
-<% form_tag do |f|%>
-    <%= f.select %>
-<% end %>
-
-<p> This page serves as a calculator for homebrew/complex stats</p>
-
-<div data-controller="gear"> Gear calculator</div>
+<% @phearon.name %>
 
 
-<h2> Assassins Rosters </h2>
+
+<!-- This page serves as a calculator for homebrew/complex stats -->
+
+<div data-controller="gear"
+     data-gear-data-value=<%= @phearon.to_json %>
+     class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-sm">
+  <div class="px-4 py-5 sm:px-6">
+    <!-- Content goes here -->
+    <div>
+        <p data-gear-target="name">Name</p>
+    </div>
+    <!-- We use less vertical padding on card headers on desktop than on body sections -->
+  </div>
+  <div class="px-4 py-5 sm:p-6">
+    <!-- Content goes here -->
+    <div>
+        <label for="ring1">Ring 1:</label>
+        <select data-action="gear#update" name="ring1" id="ring1">
+           <option value="">--Please choose an option--</option> 
+           <option value="pro1">Ring of Protection +1</option>
+           <option value="dex2">Ring of Dexterity +2</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="ring2">Ring 2:</label>
+        <select data-action="gear#update" name="ring2" id="ring2">
+           <option value="">--Please choose an option--</option> 
+           <option value="pro1">Ring of Protection +1</option>
+           <option value="dex2">Ring of Dexterity +2</option>
+        </select>
+    </div>
+  </div>
+  <div class="px-4 py-4 sm:px-6">
+    <!-- Content goes here -->
+    <div data-gear-target="results">
+        Armor Class <p data-gear-target="AC"></p>
+        To Hit: <p data-gear-target="toHit"></p>
+    </div>
+    <!-- We use less vertical padding on card footers at all sizes than on headers or body sections -->
+  </div>
+</div>
+
