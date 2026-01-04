@@ -29,9 +29,14 @@
                 data-gear-value-param="this.value()"
                 data-gear-power-param=1
                 name="ring1" id="ring1" onchange="">
-           <option value='{"value":"nil", "power":0}'>--Please choose an option--</option> 
-           <option value='{"value":"deflectBonus", "power":1}'>Ring of Protection +1</option>
-           <option value='{"value":"dexterity", "power":2}'>Ring of Dexterity +2</option>
+           <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
+           <option value='[{"value":"specAbil", "power":"On command, this ring makes the wearer blink, as with the blink spell."}]'>Ring of Blinking</option>
+           <option value='[{"value":"specAbil", "power":"This ring allows the caster to use the spell telekinesis on command."}]'>Ring of Telekinesis</option>
+           <option value='[{"value":"deflectBonus", "power":1}]'>Ring of Protection +1</option>
+           <option value='[{"value":"deflectBonus", "power":2}]'>Ring of Protection +2</option>
+           <option value='[{"value":"deflectBonus", "power":3}]'>Ring of Protection +3</option>
+           <option value='[{"value":"dexterity", "power":2}]'>Ring of Dexterity +2</option>
+           <option value='[{"value":"dexterity", "power":2}, {"value":"specAbil", "power":"On command, this ring makes the wearer blink, as with the blink spell."}]'>Fake Ring of Dexterity +2 and Blink</option>
         </select>
     </div>
 
@@ -40,11 +45,13 @@
         <select data-action="gear#update" name="ring2" id="ring2" t=this.t 
                 data-gear-value-param="this.value()"
                 data-gear-power-param=1 >
-           <option value='{"value":"nil", "power":0}'>--Please choose an option--</option> 
-           <option value='{"value":"deflectBonus", "power":1}'>Ring of Protection +1</option>
-           <option value='{"value":"deflectBonus", "power":2}'>Ring of Protection +2</option>
-           <option value='{"value":"deflectBonus", "power":3}'>Ring of Protection +3</option>
-           <option value='{"value":"dexterity", "power":2}'>Ring of Dexterity +2</option>
+           <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
+           <option value='[{"value":"specAbil", "power":"On command, this ring makes the wearer blink, as with the blink spell."}]'>Ring of Blinking</option>
+           <option value='[{"value":"specAbil", "power":"This ring allows the caster to use the spell telekinesis on command."}]'>Ring of Telekinesis</option>
+           <option value='[{"value":"deflectBonus", "power":1}]'>Ring of Protection +1</option>
+           <option value='[{"value":"deflectBonus", "power":2}]'>Ring of Protection +2</option>
+           <option value='[{"value":"deflectBonus", "power":3}]'>Ring of Protection +3</option>
+           <option value='[{"value":"dexterity", "power":2}]'>Ring of Dexterity +2</option>
         </select>
     </div>
   </div>
@@ -55,6 +62,7 @@
         Dexterity: <p data-gear-target="dex"></p>
         Armor Class <p data-gear-target="AC"></p>
         To Hit: <p data-gear-target="toHit"></p>
+        Spcial Abilities: <p data-gear-target="specAbil"></p>
     </div>
     <!-- We use less vertical padding on card footers at all sizes than on headers or body sections -->
   </div>
