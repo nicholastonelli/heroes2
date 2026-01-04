@@ -5,14 +5,19 @@ export default class extends Controller {
     data: Object,
   }
 
-  static targets = [ "name", "results", "toHit", "AC" ]
+  static targets = [ "name", "results", "toHit", "AC", "str", "dex" ]
   connect() {
     console.log(this.dataValue)
     
     this.nameTarget.textContent = this.dataValue.name
 
-    this.strMod = Math.floor((this.dataValue.strength  - 10) / 2)
-    this.dexMod = Math.floor((this.dataValue.dexterity - 10) / 2)
+    this.dexterity = this.dataValue.dexterity
+    this.strength = this.dataValue.strength
+    this.dexTarget.textContent = this.dexterity
+    this.strTarget.textContent = this.strength
+
+    this.strMod = Math.floor((this.strength  - 10) / 2)
+    this.dexMod = Math.floor((this.dexterity - 10) / 2)
 
 
 
@@ -30,13 +35,37 @@ export default class extends Controller {
   update(e){
     console.log('updating')
     console.log(e)
-    this.miscBonus = 1
+    console.log(e.srcElement);
+    console.log(e.srcElement.id)
+
+
+    let values = JSON.parse(e.srcElement.value)
+    console.log(values)
+
+    //save value to this.ring1
+    if(this[e.srcElement.id]){
+      console.log('slot was filled')
+      console.log(this[e.srcElement.id])
+      let oldValues = this[e.srcElement.id]
+      this[oldValues.value] -= oldValues.power
+    } else {
+      console.log('slot was empty');
+    }
+    this[e.srcElement.id] = values
+    this[values.value] += values.power
+
     this.tabulate()
   }
 
   tabulate(){
+    console.log(`Dexterity is ${this.dexterity}, Srength is ${this.strength}`);
+    this.strMod = Math.floor((this.strength  - 10) / 2)
+    this.dexMod = Math.floor((this.dexterity - 10) / 2)
+
+    this.dexTarget.textContent = this.dexterity
+    this.strTarget.textContent = this.strength
     this.toHitTarget.textContent = `Str: ${this.strMod } + Base Attack Bonus: ${this.dataValue.bab} = + ${this.strMod + this.dataValue.bab}`
 
-    this.ACTarget.textContent = 10 + this.dexMod + this.armorBonus + this.shieldBonus + this.sizeBonus + this.naturalBonus + this.miscBonus
+    this.ACTarget.textContent = 10 + this.dexMod + this.armorBonus + this.shieldBonus + this.sizeBonus + this.naturalBonus + this.miscBonus + this.deflectBonus
   }
 }

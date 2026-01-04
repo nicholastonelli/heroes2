@@ -25,25 +25,34 @@
     <!-- Content goes here -->
     <div>
         <label for="ring1">Ring 1:</label>
-        <select data-action="gear#update" name="ring1" id="ring1">
-           <option value="">--Please choose an option--</option> 
-           <option value="pro1">Ring of Protection +1</option>
-           <option value="dex2">Ring of Dexterity +2</option>
+        <select data-action="gear#update"
+                data-gear-value-param="this.value()"
+                data-gear-power-param=1
+                name="ring1" id="ring1" onchange="">
+           <option value='{"value":"nil", "power":0}'>--Please choose an option--</option> 
+           <option value='{"value":"deflectBonus", "power":1}'>Ring of Protection +1</option>
+           <option value='{"value":"dexterity", "power":2}'>Ring of Dexterity +2</option>
         </select>
     </div>
 
     <div>
         <label for="ring2">Ring 2:</label>
-        <select data-action="gear#update" name="ring2" id="ring2">
-           <option value="">--Please choose an option--</option> 
-           <option value="pro1">Ring of Protection +1</option>
-           <option value="dex2">Ring of Dexterity +2</option>
+        <select data-action="gear#update" name="ring2" id="ring2" t=this.t 
+                data-gear-value-param="this.value()"
+                data-gear-power-param=1 >
+           <option value='{"value":"nil", "power":0}'>--Please choose an option--</option> 
+           <option value='{"value":"deflectBonus", "power":1}'>Ring of Protection +1</option>
+           <option value='{"value":"deflectBonus", "power":2}'>Ring of Protection +2</option>
+           <option value='{"value":"deflectBonus", "power":3}'>Ring of Protection +3</option>
+           <option value='{"value":"dexterity", "power":2}'>Ring of Dexterity +2</option>
         </select>
     </div>
   </div>
   <div class="px-4 py-4 sm:px-6">
     <!-- Content goes here -->
     <div data-gear-target="results">
+        Strength: <p data-gear-target="str"></p>
+        Dexterity: <p data-gear-target="dex"></p>
         Armor Class <p data-gear-target="AC"></p>
         To Hit: <p data-gear-target="toHit"></p>
     </div>
