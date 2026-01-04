@@ -5,19 +5,34 @@ export default class extends Controller {
     data: Object,
   }
 
-  static targets = ["name", "results", "toHit", "AC", "str", "dex", "specAbil"]
+  static targets = [
+    "name",
+    "results",
+    "toHit",
+    "AC",
+    "str",
+    "dex",
+    "con",
+    "int",
+    "wis",
+    "cha",
+    "specAbil",
+  ]
   connect() {
     console.log(this.dataValue)
     this.specAbil = []
     this.nameTarget.textContent = this.dataValue.name
 
-    this.dexterity = this.dataValue.dexterity
     this.strength = this.dataValue.strength
-    this.dexTarget.textContent = this.dexterity
-    this.strTarget.textContent = this.strength
+    this.dexterity = this.dataValue.dexterity
+    this.constitution = this.dataValue.constitution
+    this.intelligence = this.dataValue.intelligence
+    this.wisdom = this.dataValue.wisdom
+    this.charisma = this.dataValue.charisma
 
-    this.strMod = Math.floor((this.strength - 10) / 2)
-    this.dexMod = Math.floor((this.dexterity - 10) / 2)
+    this.calculateAbilityMods()
+
+    //this.displayAbilityScores()
 
     // AC calculation
     this.armorBonus = 3
@@ -27,7 +42,27 @@ export default class extends Controller {
     this.deflectBonus = 0
     this.miscBonus = 0
 
+    this.mainWeaponEnhancement = 0
+    this.mainWeaponDamageDie = "1d4"
     this.tabulate()
+  }
+
+  displayAbilityScores() {
+    this.strTarget.textContent = `${this.strength} (${this.strMod})`
+    this.dexTarget.textContent = `${this.dexterity} (${this.dexMod})`
+    this.conTarget.textContent = `${this.constitution} (${this.conMod})`
+    this.intTarget.textContent = `${this.intelligence} {${this.intMod}}`
+    this.wisTarget.textContent = `${this.wisdom} {${this.wisMod}}`
+    this.chaTarget.textContent = `${this.charisma} {${this.chaMod}}`
+  }
+
+  calculateAbilityMods() {
+    this.strMod = Math.floor((this.strength - 10) / 2)
+    this.dexMod = Math.floor((this.dexterity - 10) / 2)
+    this.conMod = Math.floor((this.constitution - 10) / 2)
+    this.intMod = Math.floor((this.intelligence - 10) / 2)
+    this.wisMod = Math.floor((this.wisdom - 10) / 2)
+    this.chaMod = Math.floor((this.charisma - 10) / 2)
   }
 
   update(e) {
@@ -44,8 +79,10 @@ export default class extends Controller {
         console.log(value)
         //this[e.srcElement.id] = value
         if (value.value == "specAbil") {
-          // TODO identical special abilitied are removed together  
+          // TODO identical special abilitied are removed together
           this[value.value] = this[value.value].filter((e) => e !== value.power)
+        } else if (value.value == "mainWeaponDamageDie") {
+          this[value.value] = "1d4 bludgeon"
         } else {
           this[value.value] -= value.power
         }
@@ -60,6 +97,8 @@ export default class extends Controller {
       //this[e.srcElement.id] = value
       if (value.value == "specAbil") {
         this[value.value].push(value.power)
+      } else if (value.value == "mainWeaponDamageDie") {
+        this[value.value] = value.power
       } else {
         this[value.value] += value.power
       }
@@ -69,16 +108,27 @@ export default class extends Controller {
   }
 
   tabulate() {
-    //console.log(`Dexterity is ${this.dexterity}, Srength is ${this.strength}`);
-    this.strMod = Math.floor((this.strength - 10) / 2)
-    this.dexMod = Math.floor((this.dexterity - 10) / 2)
+    console.log(`Dexterity is ${this.dexterity}, Srength is ${this.strength}`)
+
+    this.calculateAbilityMods()
+    this.displayAbilityScores()
 
     this.specAbilTarget.textContent = this.specAbil
-    this.dexTarget.textContent = this.dexterity
-    this.strTarget.textContent = this.strength
-    this.toHitTarget.textContent = `Str: ${this.strMod} + Base Attack Bonus: ${
+
+    this.toHitTarget.textContent = `
+    
+    Str: ${this.strMod} + Base Attack Bonus: ${
       this.dataValue.bab
-    } = + ${this.strMod + this.dataValue.bab}`
+    } + Weapon Enhancement: ${this.mainWeaponEnhancement} = + ${
+      this.strMod + this.dataValue.bab + this.mainWeaponEnhancement
+    }
+    Damage: ${this.mainWeaponDamageDie}//
+    Dex: ${this.dexMod} + Base Attack Bonus: ${
+      this.dataValue.bab
+    } + Weapon Enhancement: ${this.mainWeaponEnhancement} = + ${
+      this.dexMod + this.dataValue.bab + this.mainWeaponEnhancement
+    }
+    `
 
     this.ACTarget.textContent =
       10 +

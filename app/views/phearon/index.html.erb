@@ -54,12 +54,45 @@
            <option value='[{"value":"dexterity", "power":2}]'>Ring of Dexterity +2</option>
         </select>
     </div>
+
+
+    <div>
+        <label for="amulet">Amulet:</label>
+        <select data-action="gear#update" name="amulet" id="amulet" t=this.t 
+                data-gear-value-param="this.value()"
+                data-gear-power-param=1 >
+           <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
+           <option value='[{"value":"naturalBonus", "power":1}]'>Amulet of Natural Armor +1</option>
+           <option value='[{"value":"naturalBonus", "power":2}]'>Amulet of Natural Armor +3</option>
+           <option value='[{"value":"naturalBonus", "power":3}]'>Amulet of Natural Armor +3</option>
+           <option value='[{"value":"dexterity", "power":2}]'>Ring of Dexterity +2</option>
+        </select>
+    </div>
+
+
+    Weapons:
+
+    <div>
+        <label for="mainWeapon">Main Arm:</label>
+        <select data-action="gear#update" name="mainWeapon" id="mainWeapon" t=this.t 
+                data-gear-value-param="this.value()"
+                data-gear-power-param=1 >
+           <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
+           <option value='[{"value":"mainWeaponEnhancement", "power":1}, 
+                           {"value":"mainWeaponDamageDie", "power":"1d6 slashing"}]'>Scimitar +1</option>
+        </select>
+    </div>
   </div>
   <div class="px-4 py-4 sm:px-6">
     <!-- Content goes here -->
     <div data-gear-target="results">
         Strength: <p data-gear-target="str"></p>
         Dexterity: <p data-gear-target="dex"></p>
+        Constitution: <p data-gear-target="con"></p>
+        Intelligence: <p data-gear-target="int"></p>
+        Wisdom: <p data-gear-target="wis"></p>
+        Charisma: <p data-gear-target="cha"></p>
+
         Armor Class <p data-gear-target="AC"></p>
         To Hit: <p data-gear-target="toHit"></p>
         Spcial Abilities: <p data-gear-target="specAbil"></p>
