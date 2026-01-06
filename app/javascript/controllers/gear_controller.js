@@ -8,7 +8,9 @@ export default class extends Controller {
   static targets = [
     "name",
     "results",
-    "toHit",
+    "mainHit",
+    "sideHit",
+    "hideHit",
     "AC",
     "str",
     "dex",
@@ -43,7 +45,11 @@ export default class extends Controller {
     this.miscBonus = 0
 
     this.mainWeaponEnhancement = 0
-    this.mainWeaponDamageDie = "1d4"
+    this.mainWeaponDamageDie = "1d4 bludgeoning"
+    this.sideWeaponEnhancement = 0
+    this.sideWeaponDamageDie = ""
+    this.hideWeaponEnhancement = 0
+    this.hideWeaponDamageDie = ""
     this.tabulate()
   }
 
@@ -66,17 +72,17 @@ export default class extends Controller {
   }
 
   update(e) {
-    console.log("updating")
+    //console.log("updating")
 
     let values = JSON.parse(e.srcElement.value)
 
-    console.log(e.srcElement.id)
+    //console.log(e.srcElement.id)
     if (this[e.srcElement.id]) {
-      console.log("slot was filled")
+      //console.log("slot was filled")
       let oldValues = this[e.srcElement.id]
 
       oldValues.forEach((value) => {
-        console.log(value)
+        //console.log(value)
         //this[e.srcElement.id] = value
         if (value.value == "specAbil") {
           // TODO identical special abilitied are removed together
@@ -89,7 +95,7 @@ export default class extends Controller {
       })
       //this[oldValues.value] -= oldValues.power
     } else {
-      console.log("slot was empty")
+      //console.log("slot was empty")
     }
 
     this[e.srcElement.id] = values
@@ -107,28 +113,16 @@ export default class extends Controller {
     this.tabulate()
   }
 
+
   tabulate() {
-    console.log(`Dexterity is ${this.dexterity}, Srength is ${this.strength}`)
+    //console.log(`Dexterity is ${this.dexterity}, Srength is ${this.strength}`)
 
     this.calculateAbilityMods()
     this.displayAbilityScores()
 
     this.specAbilTarget.textContent = this.specAbil
 
-    this.toHitTarget.textContent = `
-    
-    Str: ${this.strMod} + Base Attack Bonus: ${
-      this.dataValue.bab
-    } + Weapon Enhancement: ${this.mainWeaponEnhancement} = + ${
-      this.strMod + this.dataValue.bab + this.mainWeaponEnhancement
-    }
-    Damage: ${this.mainWeaponDamageDie}//
-    Dex: ${this.dexMod} + Base Attack Bonus: ${
-      this.dataValue.bab
-    } + Weapon Enhancement: ${this.mainWeaponEnhancement} = + ${
-      this.dexMod + this.dataValue.bab + this.mainWeaponEnhancement
-    }
-    `
+    this.updateWeapons()
 
     this.ACTarget.textContent =
       10 +
@@ -139,5 +133,55 @@ export default class extends Controller {
       this.naturalBonus +
       this.miscBonus +
       this.deflectBonus
+  }
+
+  updateWeapons(){
+    this.mainHitTarget.textContent = `
+    
+    Str: ${this.strMod} + Base Attack Bonus: ${
+      this.dataValue.bab
+    } + Weapon Enhancement: ${this.mainWeaponEnhancement} = + ${
+      this.strMod + this.dataValue.bab + this.mainWeaponEnhancement
+    }
+    \n OR
+    Dex: ${this.dexMod} + Base Attack Bonus: ${
+      this.dataValue.bab
+    } + Weapon Enhancement: ${this.mainWeaponEnhancement} = + ${
+      this.dexMod + this.dataValue.bab + this.mainWeaponEnhancement
+    }
+    Damage: ${this.mainWeaponDamageDie}
+    `
+
+    this.sideHitTarget.textContent = `
+    
+    Str: ${this.strMod} + Base Attack Bonus: ${
+      this.dataValue.bab
+    } + Weapon Enhancement: ${this.sideWeaponEnhancement} = + ${
+      this.strMod + this.dataValue.bab + this.sideWeaponEnhancement
+    }
+    \n OR
+    Dex: ${this.dexMod} + Base Attack Bonus: ${
+      this.dataValue.bab
+    } + Weapon Enhancement: ${this.sideWeaponEnhancement} = + ${
+      this.dexMod + this.dataValue.bab + this.sideWeaponEnhancement
+    }
+    Damage: ${this.sideWeaponDamageDie}
+    `
+
+    this.hideHitTarget.textContent = `
+    
+    Str: ${this.strMod} + Base Attack Bonus: ${
+      this.dataValue.bab
+    } + Weapon Enhancement: ${this.hideWeaponEnhancement} = + ${
+      this.strMod + this.dataValue.bab + this.hideWeaponEnhancement
+    }
+    \n OR
+    Dex: ${this.dexMod} + Base Attack Bonus: ${
+      this.dataValue.bab
+    } + Weapon Enhancement: ${this.hideWeaponEnhancement} = + ${
+      this.dexMod + this.dataValue.bab + this.hideWeaponEnhancement
+    }
+    Damage: ${this.hideWeaponDamageDie}
+    `
   }
 }

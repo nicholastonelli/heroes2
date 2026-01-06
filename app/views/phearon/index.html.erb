@@ -80,7 +80,47 @@
            <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
            <option value='[{"value":"mainWeaponEnhancement", "power":1}, 
                            {"value":"mainWeaponDamageDie", "power":"1d6 slashing"}]'>Scimitar +1</option>
+           <option value='[{"value":"mainWeaponEnhancement", "power":0}, 
+                           {"value":"mainWeaponDamageDie", "power":"1d6 slashing + 1d6 fire"}]'>Flaming Scimitar</option>
         </select>
+    </div>
+
+    <div>
+    To Hit: <p data-gear-target="mainHit"></p>
+    </div>
+
+    <div>
+        <label for="sideWeapon">Side Arm:</label>
+        <select data-action="gear#update" name="sideWeapon" id="sideWeapon" t=this.t 
+                data-gear-value-param="this.value()"
+                data-gear-power-param=1 >
+           <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
+           <option value='[{"value":"sideWeaponEnhancement", "power":1}, 
+                           {"value":"sideWeaponDamageDie", "power":"1d6 slashing"}]'>Shortsword +1</option>
+           <option value='[{"value":"sideWeaponEnhancement", "power":0}, 
+                           {"value":"sideWeaponDamageDie", "power":"1d6 slashing + 1d6 ice"}]'>Ice Shortsword</option>
+        </select>
+    </div>
+
+    <div>
+    To Hit: <p data-gear-target="sideHit"></p>
+    </div>
+
+    <div>
+        <label for="hideWeapon">Hidden Arm:</label>
+        <select data-action="gear#update" name="hideWeapon" id="hideWeapon" t=this.t 
+                data-gear-value-param="this.value()"
+                data-gear-power-param=1 >
+           <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
+           <option value='[{"value":"hideWeaponEnhancement", "power":1}, 
+                           {"value":"hideWeaponDamageDie", "power":"1d4 slashing"}]'>Dagger +1</option>
+           <option value='[{"value":"hideWeaponEnhancement", "power":0}, 
+                           {"value":"hideWeaponDamageDie", "power":"1d4 slashing + 1d6 ice"}]'>Ice Dagger</option>
+        </select>
+    </div>
+
+    <div>
+    To Hit: <p data-gear-target="hideHit"></p>
     </div>
   </div>
   <div class="px-4 py-4 sm:px-6">
@@ -94,7 +134,8 @@
         Charisma: <p data-gear-target="cha"></p>
 
         Armor Class <p data-gear-target="AC"></p>
-        To Hit: <p data-gear-target="toHit"></p>
+
+       
         Spcial Abilities: <p data-gear-target="specAbil"></p>
     </div>
     <!-- We use less vertical padding on card footers at all sizes than on headers or body sections -->
