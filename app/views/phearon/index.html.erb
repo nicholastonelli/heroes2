@@ -122,6 +122,24 @@
     <div>
     To Hit: <p data-gear-target="hideHit"></p>
     </div>
+
+    <div>
+        <label for="longWeapon">Long Arm:</label>
+        <select data-action="gear#update" name="longWeapon" id="longWeapon" t=this.t 
+                data-gear-value-param="this.value()"
+                data-gear-power-param=1 >
+           <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
+           <option value='[{"value":"longWeaponEnhancement", "power":1}, 
+                           {"value":"longWeaponDamageDie", "power":"1d10 piercing"}]'>Heavy Crossbow</option>
+           <option value='[{"value":"longWeaponEnhancement", "power":0}, 
+                           {"value":"longWeaponDamageDie", "power":"1d12 piercing"}]'>Arquebuss</option>
+        </select>
+    </div>
+
+    <div>
+    To Hit: <p data-gear-target="longHit"></p>
+    </div>
+
   </div>
   <div class="px-4 py-4 sm:px-6">
     <!-- Content goes here -->

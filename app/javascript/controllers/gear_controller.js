@@ -11,6 +11,7 @@ export default class extends Controller {
     "mainHit",
     "sideHit",
     "hideHit",
+    "longHit",
     "AC",
     "str",
     "dex",
@@ -50,6 +51,8 @@ export default class extends Controller {
     this.sideWeaponDamageDie = ""
     this.hideWeaponEnhancement = 0
     this.hideWeaponDamageDie = ""
+    this.longWeaponEnhancement = 0
+    this.longWeaponDamageDie = ""
     this.tabulate()
   }
 
@@ -182,6 +185,22 @@ export default class extends Controller {
       this.dexMod + this.dataValue.bab + this.hideWeaponEnhancement
     }
     Damage: ${this.hideWeaponDamageDie}
+    `
+
+    this.longHitTarget.textContent = `
+    
+    Str: ${this.strMod} + Base Attack Bonus: ${
+      this.dataValue.bab
+    } + Weapon Enhancement: ${this.longWeaponEnhancement} = + ${
+      this.strMod + this.dataValue.bab + this.longWeaponEnhancement
+    }
+    \n OR
+    Dex: ${this.dexMod} + Base Attack Bonus: ${
+      this.dataValue.bab
+    } + Weapon Enhancement: ${this.longWeaponEnhancement} = + ${
+      this.dexMod + this.dataValue.bab + this.longWeaponEnhancement
+    }
+    Damage: ${this.longWeaponDamageDie}
     `
   }
 }
