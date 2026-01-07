@@ -24,6 +24,7 @@ export default class extends Controller {
   connect() {
     console.log(this.dataValue)
     this.specAbil = []
+    this.maxDex = 100
     this.nameTarget.textContent = this.dataValue.name
 
     this.strength = this.dataValue.strength
@@ -81,7 +82,7 @@ export default class extends Controller {
 
     //console.log(e.srcElement.id)
     if (this[e.srcElement.id]) {
-      //console.log("slot was filled")
+      console.log("slot was filled")
       let oldValues = this[e.srcElement.id]
 
       oldValues.forEach((value) => {
@@ -92,13 +93,15 @@ export default class extends Controller {
           this[value.value] = this[value.value].filter((e) => e !== value.power)
         } else if (value.value == "mainWeaponDamageDie") {
           this[value.value] = "1d4 bludgeon"
+        } else if (value.value == "maxDex") {
+          this[value.value] = value.power
         } else {
           this[value.value] -= value.power
         }
       })
       //this[oldValues.value] -= oldValues.power
     } else {
-      //console.log("slot was empty")
+      console.log("slot was empty")
     }
 
     this[e.srcElement.id] = values
@@ -108,8 +111,14 @@ export default class extends Controller {
         this[value.value].push(value.power)
       } else if (value.value == "mainWeaponDamageDie") {
         this[value.value] = value.power
+      } else if (value.value == "maxDex") {
+        this[value.value] = value.power
       } else {
+        console.log(value)
+        console.log(this[value.value])
+        console.log(this[value.value] + value.power);
         this[value.value] += value.power
+        console.log(this[value.value])
       }
     })
 
@@ -118,24 +127,37 @@ export default class extends Controller {
 
 
   tabulate() {
-    //console.log(`Dexterity is ${this.dexterity}, Srength is ${this.strength}`)
+    
 
     this.calculateAbilityMods()
+    console.log(`Dexterity is ${this.dexterity}, Srength is ${this.strength}`)
     this.displayAbilityScores()
 
     this.specAbilTarget.textContent = this.specAbil
 
     this.updateWeapons()
 
-    this.ACTarget.textContent =
+    console.log(this.dexMod, this.maxDex);
+    console.log(this.dexMod < this.maxDex ? this.dexMod : this.maxDex )
+
+    if (this.dexMod < this.maxDex) {
+      console.log(this.maxDex);
+      console.log(`dexterity bonus is lower than maxDex`);
+    } else {
+      console.log(`dexterity bonus is higher than maxDex`);
+    }
+
+    this.armorClass =
       10 +
-      this.dexMod +
+      (this.dexMod < this.maxDex ? this.dexMod : this.maxDex) +
       this.armorBonus +
       this.shieldBonus +
       this.sizeBonus +
       this.naturalBonus +
       this.miscBonus +
       this.deflectBonus
+
+    this.ACTarget.textContent = this.armorClass
   }
 
   updateWeapons(){

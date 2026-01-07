@@ -57,8 +57,8 @@
 
 
     <div>
-        <label for="amulet">Amulet:</label>
-        <select data-action="gear#update" name="amulet" id="amulet" t=this.t 
+        <label for="neck">Neck:</label>
+        <select data-action="gear#update" name="neck" id="neck" t=this.t 
                 data-gear-value-param="this.value()"
                 data-gear-power-param=1 >
            <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
@@ -66,6 +66,54 @@
            <option value='[{"value":"naturalBonus", "power":2}]'>Amulet of Natural Armor +3</option>
            <option value='[{"value":"naturalBonus", "power":3}]'>Amulet of Natural Armor +3</option>
            <option value='[{"value":"dexterity", "power":2}]'>Ring of Dexterity +2</option>
+        </select>
+    </div>
+
+
+    <div>
+        <label for="Head">Head:</label>
+        <select data-action="gear#update" name="head" id="head" t=this.t 
+                data-gear-value-param="this.value()"
+                data-gear-power-param=1 >
+           <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
+           <option value='[{"value":"nil", "power":0}]'>Base Cowl</option>
+           <option value='[{"value":"naturalBonus", "power":1}]'>Armored Cowl</option>
+           <option value='[{"value":"sneakBonus", "power":2}]'>Sneak Cowl +2</option>
+           <option value='[{"value":"dexterity", "power":2}]'>Dex Cowl +2</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="waist">Waist:</label>
+        <select data-action="gear#update" name="waist" id="waist" t=this.t 
+                data-gear-value-param="this.value()"
+                data-gear-power-param=1 >
+           <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
+           <option value='[{"value":"naturalBonus", "power":2}]'>Belt of +2 armor</option>
+           <option value='[{"value":"strength", "power":2}]'>Belt of Strength +2</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="hands">Hands:</label>
+        <select data-action="gear#update" name="hands" id="hands" t=this.t 
+                data-gear-value-param="this.value()"
+                data-gear-power-param=1 >
+           <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
+           <option value='[{"value":"dexterity", "power":2}]'>Gloves of Dexterity +2</option>
+           <option value='[{"value":"strength", "power":2}]'>Gloves of Strength +2</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="armor">Armor:</label>
+        <select data-action="gear#update" name="armor" id="armor" t=this.t 
+                data-gear-value-param="this.value()"
+                data-gear-power-param=1 >
+           <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
+           <option value='[{"value":"armorBonus", "power":2}]'>Leather</option>
+           <option value='[{"value":"armorBonus", "power":4}, {"value":"maxDex", "power":4}]'>Chain Shirt</option>
+           <option value='[{"value":"armorBonus", "power":8}, {"value":"maxDex", "power":1}]'>Full Plate</option>
         </select>
     </div>
 
