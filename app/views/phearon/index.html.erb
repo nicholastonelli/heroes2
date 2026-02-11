@@ -84,6 +84,17 @@
     </div>
 
     <div>
+        <label for="shoulder">Shoulder:</label>
+        <select data-action="gear#update" name="shoulder" id="shoulder" t=this.t 
+                data-gear-value-param="this.value()"
+                data-gear-power-param=1 >
+           <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
+           <option value='[{"value":"naturalBonus", "power":2}]'>+2 AC Cape</option>
+           <option value='[{"value":"sneakDice", "power":2}]'>+2 Sneak Die Cape</option>
+        </select>
+    </div>
+
+    <div>
         <label for="waist">Waist:</label>
         <select data-action="gear#update" name="waist" id="waist" t=this.t 
                 data-gear-value-param="this.value()"
@@ -188,6 +199,9 @@
     To Hit: <p data-gear-target="longHit"></p>
     </div>
 
+    <div>
+        Sneak Die: <p data-gear-target="sneakDice"></p><p data-gear-target="sneakDie"></p>
+    </div>
   </div>
   <div class="px-4 py-4 sm:px-6">
     <!-- Content goes here -->
@@ -202,7 +216,7 @@
         Armor Class <p data-gear-target="AC"></p>
 
        
-        Spcial Abilities: <p data-gear-target="specAbil"></p>
+        Special Abilities: <p data-gear-target="specAbil"></p>
     </div>
     <!-- We use less vertical padding on card footers at all sizes than on headers or body sections -->
   </div>

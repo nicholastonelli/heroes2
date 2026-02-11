@@ -12,6 +12,8 @@ export default class extends Controller {
     "sideHit",
     "hideHit",
     "longHit",
+    "sneakDice",
+    "sneakDie",
     "AC",
     "str",
     "dex",
@@ -33,6 +35,9 @@ export default class extends Controller {
     this.intelligence = this.dataValue.intelligence
     this.wisdom = this.dataValue.wisdom
     this.charisma = this.dataValue.charisma
+
+    this.sneakDice = 3
+    this.sneakDie = "d6"
 
     this.calculateAbilityMods()
 
@@ -224,5 +229,7 @@ export default class extends Controller {
     }
     Damage: ${this.longWeaponDamageDie}
     `
+
+    this.sneakDiceTarget.textContent = `+ ${this.sneakDice} ${this.sneakDie}`
   }
 }
