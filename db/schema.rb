@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_14_180218) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_23_163702) do
   create_table "characters", force: :cascade do |t|
     t.integer "bab"
     t.integer "charisma"
@@ -24,5 +24,11 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_14_180218) do
     t.integer "strength"
     t.datetime "updated_at", null: false
     t.integer "wisdom"
+  end
+
+  create_table "rings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
   end
 end

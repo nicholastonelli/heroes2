@@ -91,10 +91,8 @@ export default class extends Controller {
       let oldValues = this[e.srcElement.id]
 
       oldValues.forEach((value) => {
-        //console.log(value)
-        //this[e.srcElement.id] = value
         if (value.value == "specAbil") {
-          // TODO identical special abilitied are removed together
+          // @TODO identical special abilities are removed together
           this[value.value] = this[value.value].filter((e) => e !== value.power)
         } else if (value.value == "mainWeaponDamageDie") {
           this[value.value] = "1d4 bludgeon"

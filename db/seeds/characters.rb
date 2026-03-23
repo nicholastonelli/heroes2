@@ -15,10 +15,38 @@ Character.create! name: "Phearon",
                     wisdom: 13,
                     charisma: 15
 
-Character.create! name: "Avery", bab: 8, strength: 24, dexterity: 22, constitution: 10
 
-Character.create! name: "Feargus", bab: 3, strength: 16, dexterity: 22, constitution: 10
+Character.create! name: "Avery",
+                  bab: 8, 
+                  health: 2,
+                  level: 8,
+                    strength: 24, 
+                    dexterity: 22, 
+                    constitution: 10,
+                    intelligence: 18,
+                    wisdom: 13,
+                    charisma: 15
 
-Character.create! name: "Roberts", bab: 3, strength: 16, dexterity: 22, constitution: 10
+Character.create! name: "Feargus",
+                  bab: 8, 
+                  health: 2,
+                  level: 8,
+                    strength: 24, 
+                    dexterity: 22, 
+                    constitution: 10,
+                    intelligence: 18,
+                    wisdom: 13,
+                    charisma: 15
+
+Character.create! name: "Roberts", 
+                  bab: 8, 
+                  health: 2,
+                  level: 8,
+                  strength: 24, 
+                  dexterity: 22, 
+                  constitution: 10,
+                  intelligence: 18,
+                  wisdom: 13,
+                  charisma: 15
 
 puts "Characters: #{Character.count}"
