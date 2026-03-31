@@ -1,0 +1,50 @@
+---
+title: Character Stuff
+---
+erDiagram
+    Character ||--o{ Item    : "has_many / belongs_to"
+    Character ||--o{ Loadout : "has_many / belongs_to"
+    Loadout   ||--|{ Slot    : "has_many / belongs_to"
+    Slot      ||--o{ Item    : "has_many / belongs_to"
+    Item
+    Character {
+        int id
+        string name
+        string description
+        int bab
+        int charisma
+        int constitution
+        int dexterity
+        int health
+        int intelligence
+        int level
+        int strength
+        int wisdom
+    }
+    Loadout {
+        int id
+        int character_id
+        string name
+        string description
+        int bab
+        int charisma
+        int constitution
+        int dexterity
+        int health
+        int intelligence
+        int level
+        int strength
+        int wisdom
+    }
+    Slot {
+        int id
+        int loadout_id
+        string name
+    }
+    Item {
+        int id
+        int character_id
+        int slot_id
+        string name
+        string description
+    }
