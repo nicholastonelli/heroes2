@@ -2,11 +2,14 @@
 title: Character Stuff
 ---
 erDiagram
-    Character ||--o{ Item    : "has_many / belongs_to"
-    Character ||--o{ Loadout : "has_many / belongs_to"
-    Loadout   ||--|{ Slot    : "has_many / belongs_to"
-    Slot      ||--o{ Item    : "has_many / belongs_to"
-    Item
+    Character    ||--o{ Item        : ""
+    Character    ||--o{ Loadout     : ""
+    Loadout      ||--|{ Slot        : ""
+    Slot         ||--|| Item        : ""
+    CategorySlot ||--|{ Slot        : ""
+    CategoryItem ||--|{ Item        : ""
+    CategorySlot ||--|{ Category    : ""
+    CategoryItem ||--|{ Category    : ""
     Character {
         int id
         string name
@@ -26,25 +29,33 @@ erDiagram
         int character_id
         string name
         string description
-        int bab
-        int charisma
-        int constitution
-        int dexterity
-        int health
-        int intelligence
-        int level
-        int strength
-        int wisdom
     }
     Slot {
         int id
         int loadout_id
+        int item_id
         string name
     }
     Item {
         int id
         int character_id
         int slot_id
+        string name
+        string description
+        json abilities
+    }
+    CategorySlot {
+        int id
+        int category_id
+        int slot_id
+    }
+    CategoryItem {
+        int id
+        int category_id
+        int item_id
+    }
+    Category {
+        int id
         string name
         string description
     }

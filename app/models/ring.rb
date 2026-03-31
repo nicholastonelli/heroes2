@@ -1,2 +1,0 @@
-class Ring < ApplicationRecord
-end
