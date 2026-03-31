@@ -49,4 +49,8 @@ Character.create! name: "Roberts",
                   wisdom: 13,
                   charisma: 15
 
+Loadout.create! name: "Stealth Laodout",
+                description: "A loadout for sneaking"
+
 puts "Characters: #{Character.count}"
+puts "Loadouts: #{Loadout.count}"

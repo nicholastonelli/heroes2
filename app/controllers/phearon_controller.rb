@@ -3,6 +3,8 @@ class PhearonController < ApplicationController
   def index
     @characters = Character.all
     @phearon = Character.find_by(name: "Phearon")
+    @items = Item.all
+    
   end
 
   def get

@@ -10,7 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_31_200350) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_31_222950) do
+  create_table "categories", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "description"
+    t.string "name"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "category_items", force: :cascade do |t|
+    t.integer "category_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "item_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_category_items_on_category_id"
+    t.index ["item_id"], name: "index_category_items_on_item_id"
+  end
+
+  create_table "category_slots", force: :cascade do |t|
+    t.integer "category_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "slot_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_category_slots_on_category_id"
+    t.index ["slot_id"], name: "index_category_slots_on_slot_id"
+  end
+
   create_table "characters", force: :cascade do |t|
     t.integer "bab"
     t.integer "charisma"
@@ -27,8 +52,29 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_31_200350) do
   end
 
   create_table "items", force: :cascade do |t|
+    t.json "ability"
+    t.integer "category_id"
+    t.datetime "created_at", null: false
+    t.string "description"
+    t.string "name"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "loadouts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "description"
+    t.string "name"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "slots", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "category_items", "categories"
+  add_foreign_key "category_items", "items"
+  add_foreign_key "category_slots", "categories"
+  add_foreign_key "category_slots", "slots"
 end
