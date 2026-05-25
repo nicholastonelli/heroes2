@@ -15,6 +15,8 @@ export default class extends Controller {
     "sneakDice",
     "sneakDie",
     "AC",
+    "bab",
+    "abil",
     "str",
     "dex",
     "con",
@@ -28,6 +30,8 @@ export default class extends Controller {
     this.specAbil = []
     this.maxDex = 100
     this.nameTarget.textContent = this.dataValue.name
+
+    this.bab = this.dataValue.bab
 
     this.strength = this.dataValue.strength
     this.dexterity = this.dataValue.dexterity
@@ -44,7 +48,7 @@ export default class extends Controller {
     //this.displayAbilityScores()
 
     // AC calculation
-    this.armorBonus = 3
+    this.armorBonus = 
     this.shieldBonus = 0
     this.sizeBonus = 0
     this.naturalBonus = 0
@@ -63,12 +67,36 @@ export default class extends Controller {
   }
 
   displayAbilityScores() {
-    this.strTarget.textContent = `${this.strength} (${this.strMod})`
-    this.dexTarget.textContent = `${this.dexterity} (${this.dexMod})`
-    this.conTarget.textContent = `${this.constitution} (${this.conMod})`
-    this.intTarget.textContent = `${this.intelligence} {${this.intMod}}`
-    this.wisTarget.textContent = `${this.wisdom} {${this.wisMod}}`
-    this.chaTarget.textContent = `${this.charisma} {${this.chaMod}}`
+
+    let strText = `${this.strength} (${this.strMod})`
+    this.strTargets.forEach((target) => {
+      target.textContent = strText
+    })
+    let dexText = `${this.dexterity} (${this.dexMod})`
+    this.dexTargets.forEach((target) => {
+      target.textContent = dexText
+    })
+    let conText = `${this.constitution} (${this.conMod})`
+    this.conTargets.forEach((target) => {
+      target.textContent = conText
+    })
+    let intText = `${this.intelligence} {${this.intMod}}`
+    this.intTargets.forEach((target) => {
+      target.textContent = intText
+    })
+    let wisText = `${this.wisdom} {${this.wisMod}}`
+    this.wisTargets.forEach((target) => {
+      target.textContent = wisText
+    })
+    let chaText = `${this.charisma} {${this.chaMod}}`
+    this.chaTargets.forEach((target) => {
+      target.textContent = chaText
+    })
+
+    let abilText = `Str ${this.strength}, Dex ${this.dexterity}, Con ${this.constitution}, Int ${this.intelligence}, Wis ${this.wisdom}, Cha ${this.charisma}`
+    this.abilTargets.forEach((target) => {
+      target.textContent = abilText
+    })
   }
 
   calculateAbilityMods() {
@@ -102,7 +130,6 @@ export default class extends Controller {
           this[value.value] -= value.power
         }
       })
-      //this[oldValues.value] -= oldValues.power
     } else {
       console.log("slot was empty")
     }
@@ -119,7 +146,7 @@ export default class extends Controller {
       } else {
         console.log(value)
         console.log(this[value.value])
-        console.log(this[value.value] + value.power);
+        console.log(this[value.value] + value.power)
         this[value.value] += value.power
         console.log(this[value.value])
       }
@@ -128,26 +155,26 @@ export default class extends Controller {
     this.tabulate()
   }
 
-
   tabulate() {
-    
-
     this.calculateAbilityMods()
     console.log(`Dexterity is ${this.dexterity}, Srength is ${this.strength}`)
     this.displayAbilityScores()
 
-    this.specAbilTarget.textContent = this.specAbil
+    let babText = `+ ${this.bab}`
+    this.babTargets.forEach((target) => {
+      target.textContent = babText
+    })
+    this.specAbilTargets.forEach((target) => {
+      target.textContent = this.specAbil
+    })
+    //this.specAbilTarget.textContent = this.specAbil
 
     this.updateWeapons()
 
-    console.log(this.dexMod, this.maxDex);
-    console.log(this.dexMod < this.maxDex ? this.dexMod : this.maxDex )
-
     if (this.dexMod < this.maxDex) {
-      console.log(this.maxDex);
-      console.log(`dexterity bonus is lower than maxDex`);
+      console.log(`dexterity bonus is lower than maxDex`)
     } else {
-      console.log(`dexterity bonus is higher than maxDex`);
+      console.log(`dexterity bonus is higher than maxDex`)
     }
 
     this.armorClass =
@@ -160,74 +187,82 @@ export default class extends Controller {
       this.miscBonus +
       this.deflectBonus
 
-    this.ACTarget.textContent = this.armorClass
+    let armorText = ` + ${this.armorBonus} armor`
+    let shieldText = ` + ${this.shieldBonus} shield`
+    let sizeText = ` + ${this.sizeBonus} size`
+    let naturalText = ` + ${this.naturalBonus} natural`
+    let miscText = ` + ${this.miscBonus} misc`
+    let deflectText = ` + ${this.deflectBonus} deflect`
+    let acText = `${this.armorClass} 
+    ( ${this.sizeBonus == 0 ? "" : sizeText }  
+      ${this.armorBonus == 0 ? "" : armorText } 
+      ${this.shieldBonus == 0 ? "": shieldText}
+
+      +${(this.dexMod < this.maxDex ? this.dexMod : this.maxDex)} Dex 
+      ${this.naturalBonus == 0 ? "": naturalText}
+      ${this.miscBonus == 0 ? "": miscText}
+      ${this.deflectBonus == 0 ? "": deflectText})`
+    this.ACTargets.forEach((target) => {
+      target.textContent = acText
+    })
+
+    //this.ACTarget.textContent = this.armorClass
   }
 
-  updateWeapons(){
-    this.mainHitTarget.textContent = `
-    
-    Str: ${this.strMod} + Base Attack Bonus: ${
-      this.dataValue.bab
-    } + Weapon Enhancement: ${this.mainWeaponEnhancement} = + ${
-      this.strMod + this.dataValue.bab + this.mainWeaponEnhancement
-    }
-    \n OR
-    Dex: ${this.dexMod} + Base Attack Bonus: ${
-      this.dataValue.bab
-    } + Weapon Enhancement: ${this.mainWeaponEnhancement} = + ${
-      this.dexMod + this.dataValue.bab + this.mainWeaponEnhancement
-    }
-    Damage: ${this.mainWeaponDamageDie}
-    `
+  updateWeapons() {
 
-    this.sideHitTarget.textContent = `
+    //@todo finesse option check
+    let mainHitText = `
     
-    Str: ${this.strMod} + Base Attack Bonus: ${
-      this.dataValue.bab
-    } + Weapon Enhancement: ${this.sideWeaponEnhancement} = + ${
-      this.strMod + this.dataValue.bab + this.sideWeaponEnhancement
-    }
-    \n OR
-    Dex: ${this.dexMod} + Base Attack Bonus: ${
-      this.dataValue.bab
-    } + Weapon Enhancement: ${this.sideWeaponEnhancement} = + ${
-      this.dexMod + this.dataValue.bab + this.sideWeaponEnhancement
-    }
-    Damage: ${this.sideWeaponDamageDie}
+     +${this.strMod + this.bab + this.mainWeaponEnhancement} melee
+ 
+     +${this.dexMod + this.bab + this.mainWeaponEnhancement} melee
+    (${this.mainWeaponDamageDie} + ${this.strMod + this.mainWeaponEnhancement})
     `
+    this.mainHitTargets.forEach((target) => {
+      target.textContent = mainHitText
+    })
 
-    this.hideHitTarget.textContent = `
+
+
+    let sideHitText = `
     
-    Str: ${this.strMod} + Base Attack Bonus: ${
-      this.dataValue.bab
-    } + Weapon Enhancement: ${this.hideWeaponEnhancement} = + ${
-      this.strMod + this.dataValue.bab + this.hideWeaponEnhancement
-    }
-    \n OR
-    Dex: ${this.dexMod} + Base Attack Bonus: ${
-      this.dataValue.bab
-    } + Weapon Enhancement: ${this.hideWeaponEnhancement} = + ${
-      this.dexMod + this.dataValue.bab + this.hideWeaponEnhancement
-    }
-    Damage: ${this.hideWeaponDamageDie}
-    `
+    +${this.strMod + this.bab + this.sideWeaponEnhancement} melee
 
-    this.longHitTarget.textContent = `
+    +${this.dexMod + this.bab + this.sideWeaponEnhancement} melee
+   (${this.sideWeaponDamageDie} + ${this.strMod + this.sideWeaponEnhancement})
+   `
+    this.sideHitTargets.forEach((target) => {
+      target.textContent = sideHitText
+    })
+
+    let hideHitText = `
     
-    Str: ${this.strMod} + Base Attack Bonus: ${
-      this.dataValue.bab
-    } + Weapon Enhancement: ${this.longWeaponEnhancement} = + ${
-      this.strMod + this.dataValue.bab + this.longWeaponEnhancement
-    }
-    \n OR
-    Dex: ${this.dexMod} + Base Attack Bonus: ${
-      this.dataValue.bab
-    } + Weapon Enhancement: ${this.longWeaponEnhancement} = + ${
-      this.dexMod + this.dataValue.bab + this.longWeaponEnhancement
-    }
-    Damage: ${this.longWeaponDamageDie}
-    `
+    +${this.strMod + this.bab + this.hideWeaponEnhancement} melee
 
-    this.sneakDiceTarget.textContent = `+ ${this.sneakDice} ${this.sneakDie}`
+    +${this.dexMod + this.bab + this.hideWeaponEnhancement} melee
+   (${this.hideWeaponDamageDie} + ${this.strMod + this.hideWeaponEnhancement})
+   `
+
+    this.hideHitTargets.forEach((target) => {
+      target.textContent = hideHitText
+    })
+
+    let longHitText =  `
+    
+    +${this.strMod + this.bab + this.longWeaponEnhancement} ranged
+
+    +${this.dexMod + this.bab + this.longWeaponEnhancement} ranged
+   (${this.longWeaponDamageDie} + ${this.strMod + this.longWeaponEnhancement})
+   `
+
+    this.longHitTargets.forEach((target) => {
+      target.textContent = longHitText
+    })
+
+    let sneakText = `+ ${this.sneakDice} ${this.sneakDie}`
+    this.sneakDiceTargets.forEach((target) => {
+      target.textContent = sneakText
+    })
   }
 }
