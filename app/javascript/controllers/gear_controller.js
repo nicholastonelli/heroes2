@@ -45,15 +45,18 @@ export default class extends Controller {
 
     this.calculateAbilityMods()
 
-    //this.displayAbilityScores()
+    this.mainWeaponFinesse = false
+    this.sideWeaponFinesse = false
+    this.hideWeaponFinesse = true
+    this.longWeaponFinesse = true
 
     // AC calculation
-    this.armorBonus = 
-    this.shieldBonus = 0
+    this.armorBonus = this.shieldBonus = 0
     this.sizeBonus = 0
     this.naturalBonus = 0
     this.deflectBonus = 0
     this.miscBonus = 0
+    this.armorCheckPenalty = 0
 
     this.mainWeaponEnhancement = 0
     this.mainWeaponDamageDie = "1d4 bludgeoning"
@@ -67,7 +70,6 @@ export default class extends Controller {
   }
 
   displayAbilityScores() {
-
     let strText = `${this.strength} (${this.strMod})`
     this.strTargets.forEach((target) => {
       target.textContent = strText
@@ -141,12 +143,18 @@ export default class extends Controller {
         this[value.value].push(value.power)
       } else if (value.value == "mainWeaponDamageDie") {
         this[value.value] = value.power
+      } else if (value.value == "sideWeaponDamageDie") {
+        this[value.value] = value.power
+      } else if (value.value == "hideWeaponDamageDie") {
+        this[value.value] = value.power
+      } else if (value.value == "longWeaponDamageDie") {
+        this[value.value] = value.power
       } else if (value.value == "maxDex") {
         this[value.value] = value.power
       } else {
-        console.log(value)
-        console.log(this[value.value])
-        console.log(this[value.value] + value.power)
+        //console.log(value)
+        //console.log(this[value.value])
+        //console.log(this[value.value] + value.power)
         this[value.value] += value.power
         console.log(this[value.value])
       }
@@ -193,74 +201,95 @@ export default class extends Controller {
     let naturalText = ` + ${this.naturalBonus} natural`
     let miscText = ` + ${this.miscBonus} misc`
     let deflectText = ` + ${this.deflectBonus} deflect`
+    let acPenaltyText = ` ${this.armorCheckPenalty} Armor Check Penalty`
     let acText = `${this.armorClass} 
-    ( ${this.sizeBonus == 0 ? "" : sizeText }  
-      ${this.armorBonus == 0 ? "" : armorText } 
-      ${this.shieldBonus == 0 ? "": shieldText}
+    ( ${this.sizeBonus == 0 ? "" : sizeText}  
+      ${this.armorBonus == 0 ? "" : armorText} 
+      ${this.shieldBonus == 0 ? "" : shieldText}
 
-      +${(this.dexMod < this.maxDex ? this.dexMod : this.maxDex)} Dex 
-      ${this.naturalBonus == 0 ? "": naturalText}
-      ${this.miscBonus == 0 ? "": miscText}
-      ${this.deflectBonus == 0 ? "": deflectText})`
+      +${this.dexMod < this.maxDex ? this.dexMod : this.maxDex} Dex 
+      ${this.naturalBonus == 0 ? "" : naturalText}
+      ${this.miscBonus == 0 ? "" : miscText}
+      ${this.deflectBonus == 0 ? "" : deflectText})
+      
+      ${this.armorCheckPenalty == 0 ? "" : acPenaltyText}`
     this.ACTargets.forEach((target) => {
       target.textContent = acText
     })
-
-    //this.ACTarget.textContent = this.armorClass
   }
 
   updateWeapons() {
-
     //@todo finesse option check
-    let mainHitText = `
-    
-     +${this.strMod + this.bab + this.mainWeaponEnhancement} melee
- 
-     +${this.dexMod + this.bab + this.mainWeaponEnhancement} melee
-    (${this.mainWeaponDamageDie} + ${this.strMod + this.mainWeaponEnhancement})
-    `
+    let mainHitText
+    if (this.mainWeaponFinesse == true) {
+      console.log("weapon has finesse")
+      mainHitText = `  
+      +${this.dexMod + this.bab + this.mainWeaponEnhancement} melee
+     (${this.mainWeaponDamageDie} + ${this.strMod + this.mainWeaponEnhancement})
+     `
+    } else {
+      mainHitText = `
+      +${this.strMod + this.bab + this.mainWeaponEnhancement} melee
+     (${this.mainWeaponDamageDie} + ${this.strMod + this.mainWeaponEnhancement})
+     `
+    }
     this.mainHitTargets.forEach((target) => {
       target.textContent = mainHitText
     })
 
-
-
-    let sideHitText = `
-    
-    +${this.strMod + this.bab + this.sideWeaponEnhancement} melee
-
+    let sideHitText
+    if (this.sideWeaponFinesse == true) {
+      sideHitText = `
     +${this.dexMod + this.bab + this.sideWeaponEnhancement} melee
    (${this.sideWeaponDamageDie} + ${this.strMod + this.sideWeaponEnhancement})
    `
+    } else {
+      sideHitText = `
+    +${this.strMod + this.bab + this.sideWeaponEnhancement} melee
+   (${this.sideWeaponDamageDie} + ${this.strMod + this.sideWeaponEnhancement})
+   `
+    }
     this.sideHitTargets.forEach((target) => {
       target.textContent = sideHitText
     })
 
-    let hideHitText = `
-    
-    +${this.strMod + this.bab + this.hideWeaponEnhancement} melee
-
+    let hideHitText
+    if (this.hideWeaponFinesse == true) {
+      hideHitText = `
     +${this.dexMod + this.bab + this.hideWeaponEnhancement} melee
    (${this.hideWeaponDamageDie} + ${this.strMod + this.hideWeaponEnhancement})
    `
+    }else{
+      hideHitText = `
+    +${this.strMod + this.bab + this.hideWeaponEnhancement} melee
+   (${this.hideWeaponDamageDie} + ${this.strMod + this.hideWeaponEnhancement})
+   `
+    }
+    
 
     this.hideHitTargets.forEach((target) => {
       target.textContent = hideHitText
     })
 
-    let longHitText =  `
-    
-    +${this.strMod + this.bab + this.longWeaponEnhancement} ranged
-
+    let longHitText
+    if (this.longWeaponFinesse == true) {
+      longHitText = `
     +${this.dexMod + this.bab + this.longWeaponEnhancement} ranged
-   (${this.longWeaponDamageDie} + ${this.strMod + this.longWeaponEnhancement})
+   (${this.longWeaponDamageDie} + ${this.longWeaponEnhancement})
    `
+    }else{
+      longHitText = `
+      +${this.strMod + this.bab + this.longWeaponEnhancement} ranged
+     (${this.longWeaponDamageDie} + ${this.longWeaponEnhancement})
+     `
+    }
+    
 
     this.longHitTargets.forEach((target) => {
       target.textContent = longHitText
     })
 
-    let sneakText = `+ ${this.sneakDice} ${this.sneakDie}`
+    let sneakText = `+ ${this.sneakDice}${this.sneakDie}`
     this.sneakDiceTargets.forEach((target) => {
       target.textContent = sneakText
     })

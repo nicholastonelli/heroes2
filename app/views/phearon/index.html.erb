@@ -93,6 +93,14 @@
                     </td>
                 </tr>
 
+
+                <tr>
+                    <th>Sneak Attack: 
+                    </th> 
+                    <td data-gear-target='sneakDice'> 
+                    </td>
+                </tr>
+
                 <tr>
                     <th>Special Abilities: 
                     </th> 
@@ -121,9 +129,6 @@
                     </td>
                 </tr>
         </table>
-            
-
-        
     </div>
 
     <!-- Character Card 2 goes here -->
@@ -147,13 +152,12 @@
 
   <div class="px-4 py-5 sm:px-6">
     <!-- Form goes here -->
-
-
     <div>
         <p data-gear-target="name">Name</p>
     </div>
     <!-- We use less vertical padding on card headers on desktop than on body sections -->
   </div>
+
   <div class="px-4 py-5 sm:p-6">
     <!-- Content goes here -->
     <div>
@@ -255,9 +259,9 @@
                 data-gear-value-param="this.value()"
                 data-gear-power-param=1 >
            <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
-           <option value='[{"value":"armorBonus", "power":2}]'>Leather</option>
-           <option value='[{"value":"armorBonus", "power":4}, {"value":"maxDex", "power":4}]'>Chain Shirt</option>
-           <option value='[{"value":"armorBonus", "power":8}, {"value":"maxDex", "power":1}]'>Full Plate</option>
+           <option value='[{"value":"armorBonus", "power":2}, {"value":"armorCheckPenalty", "power":0}]'>Leather</option>
+           <option value='[{"value":"armorBonus", "power":4}, {"value":"maxDex", "power":4}, {"value":"armorCheckPenalty", "power":-2}]'>Chain Shirt</option>
+           <option value='[{"value":"armorBonus", "power":8}, {"value":"maxDex", "power":1}, {"value":"armorCheckPenalty", "power":-6}]'>Full Plate</option>
         </select>
     </div>
 
@@ -271,14 +275,15 @@
                 data-gear-power-param=1 >
            <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
            <option value='[{"value":"mainWeaponEnhancement", "power":1}, 
-                           {"value":"mainWeaponDamageDie", "power":"1d6 slashing"}]'>Scimitar +1</option>
+                           {"value":"mainWeaponDamageDie", "power":"1d6 slashing"},
+                           {"value":"mainWeaponFinesse", "power":true}]'>Scimitar +1</option>
            <option value='[{"value":"mainWeaponEnhancement", "power":0}, 
-                           {"value":"mainWeaponDamageDie", "power":"1d6 slashing + 1d6 fire"}]'>Flaming Scimitar</option>
+                           {"value":"mainWeaponDamageDie", "power":"1d6 slashing + 1d6 fire"},
+                           {"value":"mainWeaponFinesse", "power":true}]'>Flaming Scimitar</option>
+            <option value='[{"value":"mainWeaponEnhancement", "power":0}, 
+                            {"value":"mainWeaponDamageDie", "power":"1d10 bludgeoning"},
+                            {"value":"mainWeaponFinesse", "power":false}]'>Maul</option>
         </select>
-    </div>
-
-    <div>
-    To Hit: <p data-gear-target="mainHit"></p>
     </div>
 
     <div>
@@ -288,15 +293,17 @@
                 data-gear-power-param=1 >
            <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
            <option value='[{"value":"sideWeaponEnhancement", "power":1}, 
-                           {"value":"sideWeaponDamageDie", "power":"1d6 slashing"}]'>Shortsword +1</option>
+                           {"value":"sideWeaponDamageDie", "power":"1d6 slashing"},
+                            {"value":"sideWeaponFinesse", "power":true}]'>Shortsword +1</option>
            <option value='[{"value":"sideWeaponEnhancement", "power":0}, 
-                           {"value":"sideWeaponDamageDie", "power":"1d6 slashing + 1d6 ice"}]'>Ice Shortsword</option>
+                           {"value":"sideWeaponDamageDie", "power":"1d6 slashing + 1d6 ice"},
+                            {"value":"sideWeaponFinesse", "power":true}]'>Ice Shortsword</option>
+            <option value='[{"value":"sideWeaponEnhancement", "power":0}, 
+                            {"value":"sideWeaponDamageDie", "power":"1d8 bludgeoning"},
+                            {"value":"sideWeaponFinesse", "power":false}]'>Mace</option>
         </select>
     </div>
 
-    <div>
-    To Hit: <p data-gear-target="sideHit"></p>
-    </div>
 
     <div>
         <label for="hideWeapon">Hidden Arm:</label>
@@ -311,9 +318,6 @@
         </select>
     </div>
 
-    <div>
-    To Hit: <p data-gear-target="hideHit"></p>
-    </div>
 
     <div>
         <label for="longWeapon">Long Arm:</label>
@@ -328,17 +332,10 @@
         </select>
     </div>
 
-    <div>
-    To Hit: <p data-gear-target="longHit"></p>
-    </div>
-
-    <div>
-        Sneak Die: <p data-gear-target="sneakDice"></p><p data-gear-target="sneakDie"></p>
-    </div>
   </div>
   <div class="px-4 py-4 sm:px-6">
     <!-- Content goes here -->
-    <div data-gear-target="results">
+    <div data-gear-target="results" class="hidden">
         Strength: <p data-gear-target="str"></p>
         Dexterity: <p data-gear-target="dex"></p>
         Constitution: <p data-gear-target="con"></p>
