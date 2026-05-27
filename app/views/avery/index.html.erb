@@ -1,6 +1,27 @@
-<h1>Avery</h1>
-<p>This page serves as a calculator for homebrew/complex stats</p>
+<div class="flex" data-controller="attack"
+                  data-attack-data-value=<%= @avery.to_json %>>
 
-<h2>Team calculator</h2>
+    <div>
+        <p data-attack-target="name">Name</p>
+    </div>
+    <%= render partial: "character_card", locals: {character: @avery} %>
 
-<h2>Attack calculator</h2>
+Feats
+
+<div>
+        <label for="ring1">:</label>
+        <select data-action="attack#update"
+                data-gear-value-param="this.value()"
+                data-gear-power-param=1
+                name="twf" id="twf" onchange="">
+           <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
+           <option value='[{"value":"specAbil", "power":"On command, this ring makes the wearer blink, as with the blink spell."}]'>Ring of Blinking</option>
+           <option value='[{"value":"specAbil", "power":"This ring allows the caster to use the spell telekinesis on command."}]'>Ring of Telekinesis</option>
+           <option value='[{"value":"deflectBonus", "power":1}]'>Ring of Protection +1</option>
+           <option value='[{"value":"deflectBonus", "power":2}]'>Ring of Protection +2</option>
+           <option value='[{"value":"deflectBonus", "power":3}]'>Ring of Protection +3</option>
+           <option value='[{"value":"dexterity", "power":2}]'>Ring of Dexterity +2</option>
+           <option value='[{"value":"dexterity", "power":2}, {"value":"specAbil", "power":"On command, this ring makes the wearer blink, as with the blink spell."}]'>Fake Ring of Dexterity +2 and Blink</option>
+        </select>
+    </div>
+</div>

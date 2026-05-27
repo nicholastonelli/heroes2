@@ -1,0 +1,111 @@
+<div id="characterCard">
+    <% character %>
+        <table class="">
+            <tbody class="">
+                <tr class="">
+                    <th class="">Size/Type: 
+                    </th> 
+                    <td class=""> Medium Human
+                    </td>
+                </tr>
+
+                <tr class="">
+                    <th class="">Hit Dice: 
+                    </th> 
+                    <td> <%= character.level %>d6 + <%= ((character.constitution-10)/2) * character.level %>  (<%= character.health %>)
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Initiative: 
+                    </th> 
+                    <td> +<%= (character.dexterity-10)/2 %>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Speed: 
+                    </th> 
+                    <td> 30 ft.
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Armor Class: 
+                    </th> 
+                    <td data-gear-target='AC'> 
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Base Attack/Grapple: 
+                    </th> 
+                    <td data-gear-target='bab'> 
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Main Attack: 
+                    </th> 
+                    <td data-gear-target='mainHit'> 
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Side Attack: 
+                    </th> 
+                    <td data-gear-target='sideHit'> 
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Hidden Attack: 
+                    </th> 
+                    <td data-gear-target='hideHit'> 
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Long Attack: 
+                    </th> 
+                    <td data-gear-target='longHit'> 
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <th>Sneak Attack: 
+                    </th> 
+                    <td data-gear-target='sneakDice'> 
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Special Abilities: 
+                    </th> 
+                    <td data-gear-target='specAbil'> 
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Saves: 
+                    </th> 
+                    <td data-gear-target='saves'> Fort , Ref , Will 
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Abilities: 
+                    </th> 
+                    <td data-gear-target='abil'> 
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Skills: 
+                    </th> 
+                    <td data-gear-target='skills'> 
+                    </td>
+                </tr>
+        </table>
+    </div>
