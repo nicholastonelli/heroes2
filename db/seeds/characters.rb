@@ -17,9 +17,9 @@ Character.create! name: "Phearon",
 
 
 Character.create! name: "Avery",
-                  bab: 8, 
-                  health: 2,
-                  level: 8,
+                  bab: 10, 
+                  health: 50,
+                  level: 10,
                     strength: 24, 
                     dexterity: 22, 
                     constitution: 10,

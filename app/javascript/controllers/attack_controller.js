@@ -40,8 +40,17 @@ export default class extends Controller {
     this.wisdom = this.dataValue.wisdom
     this.charisma = this.dataValue.charisma
 
-    this.sneakDice = 3
-    this.sneakDie = "d6"
+    //this.sneakDice = 3
+    //this.sneakDie = "d6"
+
+    this.twf = false
+    this.twff = false
+    this.itwff = false
+    this.twfPrimaryPenalty = 6
+    this.twfOffhandPenalty = 10
+
+    this.snpk = false
+    this.dance = false
 
     this.calculateAbilityMods()
 
@@ -111,14 +120,15 @@ export default class extends Controller {
   }
 
   update(e) {
-    //console.log("updating")
+    console.log("updating")
 
     let values = JSON.parse(e.srcElement.value)
 
-    //console.log(e.srcElement.id)
+    console.log(e.srcElement.id)
     if (this[e.srcElement.id]) {
       console.log("slot was filled")
       let oldValues = this[e.srcElement.id]
+      console.log(oldValues)
 
       oldValues.forEach((value) => {
         if (value.value == "specAbil") {
@@ -134,11 +144,13 @@ export default class extends Controller {
       })
     } else {
       console.log("slot was empty")
+      console.log(this.twf)
     }
 
     this[e.srcElement.id] = values
     values.forEach((value) => {
-      //this[e.srcElement.id] = value
+      //@todo rework for boolean
+
       if (value.value == "specAbil") {
         this[value.value].push(value.power)
       } else if (value.value == "mainWeaponDamageDie") {
@@ -151,10 +163,18 @@ export default class extends Controller {
         this[value.value] = value.power
       } else if (value.value == "maxDex") {
         this[value.value] = value.power
+      } else if (
+        value.value == "twf" ||
+        value.value == "twff" ||
+        value.value == "itwff"
+      ) {
+        this[value.value] = value.power
+      } else if (value.value == "snpk" || value.value == "dance") {
+        this[value.value] = value.power
       } else {
-        //console.log(value)
-        //console.log(this[value.value])
-        //console.log(this[value.value] + value.power)
+        console.log(value)
+        console.log(this[value.value])
+        console.log(this[value.value] + value.power)
         this[value.value] += value.power
         console.log(this[value.value])
       }
@@ -210,16 +230,19 @@ export default class extends Controller {
     })
   }
 
-  updateAttacks(){
+  updateAttacks() {
+    console.log(this.twf)
     let babText
-    if (this.bab < 6){
+    if (this.bab < 6) {
       babText = `+ ${this.bab}`
-    } else if (this.bab > 5 && this.bab < 10) {
+    } else if (this.bab > 5 && this.bab <= 10) {
       babText = `+${this.bab} / +${this.bab - 5}`
     } else if (this.bab > 10 && this.bab < 15) {
       babText = `+ ${this.bab} / +${this.bab - 5} / +${this.bab - 10}`
     } else if (this.bab > 14) {
-      babText = `+ ${this.bab} / +${this.bab - 5} / +${this.bab - 10} / +${this.bab - 15}`
+      babText = `+ ${this.bab} / +${this.bab - 5} / +${this.bab - 10} / +${
+        this.bab - 15
+      }`
     }
 
     this.babTargets.forEach((target) => {
@@ -229,86 +252,86 @@ export default class extends Controller {
       target.textContent = this.specAbil
     })
 
-    let fullHitText = ``
+    let OHPenalty = 0
+    let MHPenalty = 0
+    let snapKickPenalty = 0
+    let danceBonus = 0
+
+    if (this.snpk == true) {
+      snapKickPenalty = 2
+    }
+
+    if (this.dance == true) {
+      danceBonus = 2
+    }
+
+    //@todo rework for non light offhand weapons
+    if (this.twf == true && this.twff == false) {
+      OHPenalty = 8
+      MHPenalty = 4
+    } else if (this.twf == true && this.twff == true && this.itwff == false) {
+      OHPenalty = 2
+      MHPenalty = 2
+    } else if (this.twf == true && this.twff == true && this.itwff == true) {
+      OHPenalty = 2
+      MHPenalty = 2
+    }
+
+    let fullHitText
+
+    let mainBon =
+      this.bab +
+      this.mainWeaponEnhancement +
+      this.strMod -
+      MHPenalty -
+      snapKickPenalty +
+      danceBonus
+
+    console.log(
+      mainBon,
+      this.bab,
+      this.mainWeaponEnhancement,
+      this.strMod,
+      MHPenalty,
+      snapKickPenalty,
+      danceBonus
+    )
+    let sideBon =
+      this.bab +
+      this.sideWeaponEnhancement +
+      this.strMod -
+      OHPenalty -
+      snapKickPenalty +
+      danceBonus
+
+    if (this.bab < 6) {
+      fullHitText = `+ ${mainBon}`
+    } else if (this.bab > 5 && this.bab <= 10) {
+      fullHitText = `+${mainBon} / +${mainBon - 5}`
+    } else if (this.bab > 10 && this.bab < 15) {
+      fullHitText = `+ ${mainBon} / +${mainBon - 5} / +${mainBon - 10}`
+    } else if (this.bab > 14) {
+      fullHitText = `+ ${mainBon} / +${mainBon - 5} / +${mainBon - 10} / +${
+        mainBon - 15
+      }`
+    }
+
+    if (this.twf == true && this.twff == true && this.itwff == true) {
+      console.log("Improved Twf feat use")
+      fullHitText += ` + ${sideBon} + ${sideBon - 5} `
+    } else if (this.twf == true && this.twff == true) {
+      fullHitText += ` + ${sideBon} `
+    } else if (this.twf == true) {
+      fullHitText += ` + ${sideBon}  `
+    }
+
+    if (this.snpk == true) {
+      fullHitText += ` + ${this.bab + this.strMod - snapKickPenalty} `
+      console.log(fullHitText)
+    }
+
     this.fullHitTargets.forEach((target) => {
       target.textContent = fullHitText
     })
   }
-  
-  /* updateWeapons() {
-    //@todo finesse option check
-    let mainHitText
-    if (this.mainWeaponFinesse == true) {
-      console.log("weapon has finesse")
-      mainHitText = `  
-      +${this.dexMod + this.bab + this.mainWeaponEnhancement} melee
-     (${this.mainWeaponDamageDie} + ${this.strMod + this.mainWeaponEnhancement})
-     `
-    } else {
-      mainHitText = `
-      +${this.strMod + this.bab + this.mainWeaponEnhancement} melee
-     (${this.mainWeaponDamageDie} + ${this.strMod + this.mainWeaponEnhancement})
-     `
-    }
-    this.mainHitTargets.forEach((target) => {
-      target.textContent = mainHitText
-    })
-
-    let sideHitText
-    if (this.sideWeaponFinesse == true) {
-      sideHitText = `
-    +${this.dexMod + this.bab + this.sideWeaponEnhancement} melee
-   (${this.sideWeaponDamageDie} + ${this.strMod + this.sideWeaponEnhancement})
-   `
-    } else {
-      sideHitText = `
-    +${this.strMod + this.bab + this.sideWeaponEnhancement} melee
-   (${this.sideWeaponDamageDie} + ${this.strMod + this.sideWeaponEnhancement})
-   `
-    }
-    this.sideHitTargets.forEach((target) => {
-      target.textContent = sideHitText
-    })
-
-    let hideHitText
-    if (this.hideWeaponFinesse == true) {
-      hideHitText = `
-    +${this.dexMod + this.bab + this.hideWeaponEnhancement} melee
-   (${this.hideWeaponDamageDie} + ${this.strMod + this.hideWeaponEnhancement})
-   `
-    }else{
-      hideHitText = `
-    +${this.strMod + this.bab + this.hideWeaponEnhancement} melee
-   (${this.hideWeaponDamageDie} + ${this.strMod + this.hideWeaponEnhancement})
-   `
-    }
-    
-
-    this.hideHitTargets.forEach((target) => {
-      target.textContent = hideHitText
-    })
-
-    let longHitText
-    if (this.longWeaponFinesse == true) {
-      longHitText = `
-    +${this.dexMod + this.bab + this.longWeaponEnhancement} ranged
-   (${this.longWeaponDamageDie} + ${this.longWeaponEnhancement})
-   `
-    }else{
-      longHitText = `
-      +${this.strMod + this.bab + this.longWeaponEnhancement} ranged
-     (${this.longWeaponDamageDie} + ${this.longWeaponEnhancement})
-     `
-    }
-    
-
-    this.longHitTargets.forEach((target) => {
-      target.textContent = longHitText
-    })
-
-    let sneakText = `+ ${this.sneakDice}${this.sneakDie}`
-    this.sneakDiceTargets.forEach((target) => {
-      target.textContent = sneakText
-    })
-  } */
 }

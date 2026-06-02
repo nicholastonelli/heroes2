@@ -6,22 +6,77 @@
     </div>
     <%= render partial: "character_card", locals: {character: @avery} %>
 
-Feats
+    
 
-<div>
-        <label for="ring1">:</label>
-        <select data-action="attack#update"
-                data-gear-value-param="this.value()"
-                data-gear-power-param=1
-                name="twf" id="twf" onchange="">
-           <option value='[{"value":"nil", "power":0}]'>--Please choose an option--</option> 
-           <option value='[{"value":"specAbil", "power":"On command, this ring makes the wearer blink, as with the blink spell."}]'>Ring of Blinking</option>
-           <option value='[{"value":"specAbil", "power":"This ring allows the caster to use the spell telekinesis on command."}]'>Ring of Telekinesis</option>
-           <option value='[{"value":"deflectBonus", "power":1}]'>Ring of Protection +1</option>
-           <option value='[{"value":"deflectBonus", "power":2}]'>Ring of Protection +2</option>
-           <option value='[{"value":"deflectBonus", "power":3}]'>Ring of Protection +3</option>
-           <option value='[{"value":"dexterity", "power":2}]'>Ring of Dexterity +2</option>
-           <option value='[{"value":"dexterity", "power":2}, {"value":"specAbil", "power":"On command, this ring makes the wearer blink, as with the blink spell."}]'>Fake Ring of Dexterity +2 and Blink</option>
+    Weapons:
+
+    <div>
+        <label for="mainWeapon">Primary:</label>
+        <select data-action="attack#update" name="mainWeapon" id="mainWeapon" t=this.t 
+                data-attack-value-param="this.value()"
+                data-attack-power-param=1 >
+           <option value='[{"value":"mainWeaponEnhancement", "power":0}, 
+                           {"value":"mainWeaponDamageDie", "power":"1d6 bludgeoning"},
+                           {"value":"mainWeaponFinesse", "power":true},
+                           {"value":"mainWeaponCritical", "power":"20"}]'>Unarmed</option> 
+           <option value='[{"value":"mainWeaponEnhancement", "power":4}, 
+                           {"value":"mainWeaponDamageDie", "power":"1d6 slashing"},
+                           {"value":"mainWeaponFinesse", "power":true},
+                           {"value":"mainWeaponCritical", "power":"17-20"}]'>Kago</option>
+           <option value='[{"value":"mainWeaponEnhancement", "power":1}, 
+                           {"value":"mainWeaponDamageDie", "power":"2d4 slashing"},
+                           {"value":"mainWeaponFinesse", "power":true},
+                           {"value":"mainWeaponCritical", "power":"19-20"}]'>Guisarme</option>
+            <option value='[{"value":"mainWeaponEnhancement", "power":1}, 
+                            {"value":"mainWeaponDamageDie", "power":"1d12 bludgeoning + 1d4 sonic"},
+                            {"value":"mainWeaponFinesse", "power":false},
+                            {"value":"mainWeaponCritical", "power":20}]'>Cracking Bell</option>
+            <option value='[{"value":"mainWeaponEnhancement", "power":2}, 
+                            {"value":"mainWeaponDamageDie", "power":"1d8 slashing + 1d4 sonic"},
+                            {"value":"mainWeaponFinesse", "power":false},
+                            {"value":"mainWeaponCritical", "power":20}]'>Reverberant Sword</option>
         </select>
+    </div>
+
+    <div>
+        <label for="sideWeapon">Offhand:</label>
+        <select data-action="attack#update" name="sideWeapon" id="sideWeapon" t=this.t 
+                data-attack-value-param="this.value()"
+                data-attack-power-param=1 >
+           <option value='[{"value":"sideWeaponEnhancement", "power":0}, 
+                           {"value":"sideWeaponDamageDie", "power":"1d6 bludgeoning"},
+                           {"value":"sideWeaponFinesse", "power":true},
+                           {"value":"sideWeaponCritical", "power":"20"}]'>Unarmed</option> 
+            <option value='[{"value":"sideWeaponEnhancement", "power":4}, 
+                           {"value":"sideWeaponDamageDie", "power":"1d6 slashing"},
+                           {"value":"sideWeaponFinesse", "power":true},
+                           {"value":"sideWeaponCritical", "power":"17-20"}]'>Kago</option>
+           <option value='[{"value":"sideWeaponEnhancement", "power":1}, 
+                           {"value":"sideWeaponDamageDie", "power":"1d6 slashing"},
+                            {"value":"sideWeaponFinesse", "power":true}]'>Shortsword +1</option>
+           <option value='[{"value":"sideWeaponEnhancement", "power":0}, 
+                           {"value":"sideWeaponDamageDie", "power":"1d6 slashing + 1d6 ice"},
+                            {"value":"sideWeaponFinesse", "power":true}]'>Ice Shortsword</option>
+            <option value='[{"value":"sideWeaponEnhancement", "power":0}, 
+                            {"value":"sideWeaponDamageDie", "power":"1d8 bludgeoning"},
+                            {"value":"sideWeaponFinesse", "power":false}]'>Mace</option>
+        </select>
+    </div>
+
+    <div>
+        <input data-action="attack#update" type="checkbox" id="twf" name="drone" value='[{"value":"twf", "power":true}]'/>
+        <label for="twf">Two Weapon Fighting</label>
+
+        <input data-action="attack#update" type="checkbox" id="twff" name="drone" value='[{"value":"twff", "power":true}]'/>
+        <label for="twff">Two Weapon Fighting Feat</label>
+        
+        <input data-action="attack#update" type="checkbox" id="itwff" name="drone" value='[{"value":"itwff", "power":true}]'/>
+        <label for="itwff">Improved Two Weapon Fighting Feat</label>
+
+        <input data-action="attack#update" type="checkbox" id="snpk" name="drone" value='[{"value":"snpk", "power":true}]'/>
+        <label for="snpk">Snap Kick</label>
+
+        <input data-action="attack#update" type="checkbox" id="dance" name="drone" value='[{"value":"dance", "power":true}]'/>
+        <label for="dance">Dervish Dance</label>
     </div>
 </div>
